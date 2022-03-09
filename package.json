@@ -1,0 +1,25 @@
+{
+  "name": "brawlhalla-swz-ts",
+  "version": "1.0.0",
+  "description": "An SWZ decryption library for the game Brawlhalla",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run build && node dist/test.js",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itselectroz/brawlhalla-swz-ts.git"
+  },
+  "author": "itselectroz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/itselectroz/brawlhalla-swz-ts/issues"
+  },
+  "homepage": "https://github.com/itselectroz/brawlhalla-swz-ts#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "typescript": "^4.6.2"
+  }
+}
