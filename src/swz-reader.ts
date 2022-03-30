@@ -20,11 +20,11 @@ export class SWZReader {
         this.prng = new PRNG();
     }
 
-    readByte() {
+    private readByte() {
         return this.buffer.readUInt8(this.offset++);
     }
 
-    readUInt32() {
+    private readUInt32() {
         const value: number = this.buffer.readUInt32BE(this.offset);
         this.offset += 4;
         return value;

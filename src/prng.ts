@@ -40,4 +40,12 @@ export class PRNG {
 
         return this.state[newStateIndex];
     }
+
+    getState(): Uint32Array {
+        return new Uint32Array([...this.state]);
+    }
+
+    getStateIndex(): number {
+        return this.stateIndex;
+    }
 }
