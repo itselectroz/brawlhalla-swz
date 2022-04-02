@@ -4,7 +4,7 @@ import { PRNG } from "./prng";
 import { SWZReader } from "./swz-reader";
 
 const brawlDir = process.platform == "darwin" ? `${process.env.HOME}/Library/Application Support/Steam/steamapps/common/Brawlhalla/Brawlhalla.app/Contents/Resources/` : "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Brawlhalla\\";
-const dynamic = readFileSync(`Init.swz`);
+const dynamic = readFileSync(`${brawlDir}Dynamic.swz`);
 const swf = readFileSync(`${brawlDir}BrawlhallaAir.swf`);
 
 function readSWZ() {
