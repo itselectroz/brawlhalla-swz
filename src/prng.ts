@@ -13,6 +13,7 @@ export class PRNG {
         this.seed = seed >>> 0;
 
         this.state[0] = this.seed;
+        this.stateIndex = 0;
 
         for (let i = 1; i < this.state.length; i++) {
             const previousValue = this.state[i - 1];

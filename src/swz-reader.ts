@@ -49,6 +49,39 @@ export class SWZReader {
         return checkSum >>> 0 == expectedChecksum;
     }
 
+    bruteforceHeader(patch: number): number {
+        // This will brute force the decryption key using a patch number and the header of an SWZ file.
+
+        this.decryptionKey = -1;
+
+        let expectedChecksum: number = this.readUInt32();
+        let seedBeforeXOR: number = this.readUInt32();
+
+        for(let i = 0; i < 100000; i++) {
+            const key = patch + (i * 10000);
+            const seed = seedBeforeXOR ^ key;
+
+            this.prng.initState(seed);
+
+            let checkSum = 771006925;
+            let xorCount = (key % 0x1F) + 5;
+    
+            if (xorCount != 0) {
+                do {
+                    checkSum ^= this.prng.getRandom();
+                    --xorCount;
+                } while (xorCount);
+            }
+
+            if (checkSum == expectedChecksum) {
+                this.decryptionKey = key;
+                break;
+            }
+        }
+        
+        return this.decryptionKey;
+    }
+
     readData(): Buffer | false {
         if(this.buffer.length - this.offset <= 12) {
             return false;
