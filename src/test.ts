@@ -71,7 +71,12 @@ function testWriteSWZ() {
     writeFileSync(`${brawlDir}Dynamic.swz.bak`, dynamic);
 
     const swzReader = new SWZReader(dynamic, 0);
-    const decryptionKey = swzReader.bruteforceHeader(6050);
+    const decryptionKey = swzReader.bruteforceHeader(6060);
+
+    if (decryptionKey == -1) {
+        console.log("Failed to bruteforce decryption key");
+        return;
+    }
     
     const swzWriter = new SWZWriter(decryptionKey);
 
