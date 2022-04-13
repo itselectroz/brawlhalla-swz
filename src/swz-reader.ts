@@ -82,7 +82,7 @@ export class SWZReader {
         return this.decryptionKey;
     }
 
-    readData(): Buffer | false {
+    readData(second: boolean = false): Buffer | false {
         if(this.buffer.length - this.offset <= 12) {
             return false;
         }
@@ -107,7 +107,7 @@ export class SWZReader {
             checksum = newByte ^ ROTR(checksum, (bitShift + 1) & 0xFF);
         }
         if ((checksum >>> 0) != expectedChecksum) {
-            console.log("Incorrect data chunk checksum");
+            console.log(`Data checksum mismatch: ${checksum >>> 0} != ${expectedChecksum}`);
             return false;
         }
 
