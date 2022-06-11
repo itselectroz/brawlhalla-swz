@@ -108,3 +108,5 @@ dist/
 
 # MacOS
 .DS_Store
+
+dump

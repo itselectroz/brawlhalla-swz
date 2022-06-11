@@ -54,7 +54,7 @@ export class SWZWriter {
         this.writeUInt32(seed ^ this.decryptionKey);
     }
 
-    writeData(data: Buffer) {
+    writeData(data: Buffer, forceChecksum?: number) {
         const uncompressedSize = data.length;
 
         const compressedData = deflateSync(data);
@@ -79,7 +79,12 @@ export class SWZWriter {
             checksum = compressedData[i] ^ ROTR(checksum, (bitShift + 1) & 0xFF);
         }
 
-        this.writeUInt32(checksum);
+        if(forceChecksum == undefined) {
+            this.writeUInt32(checksum);
+        }
+        else {
+            this.writeUInt32(forceChecksum);
+        }
         
         for(let i = 0; i < compressedSize; i++) {
             this.writeByte(compressedBuffer[i]);
