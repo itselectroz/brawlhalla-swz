@@ -23,7 +23,7 @@
     "typescript": "^4.6.2"
   },
   "dependencies": {
-    "abc-disassembler": "file:../abc-disassembler",
-    "swf-parser": "file:../swf-parser"
+    "abc-disassembler": "github:itselectroz/abc-disassembler",
+    "swf-parser": "github:itselectroz/swf-parser"
   }
 }

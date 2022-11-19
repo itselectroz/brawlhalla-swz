@@ -5,7 +5,7 @@ import { SWZReader } from "./swz-reader";
 import { SWZWriter } from "./swz-writer";
 
 const brawlDir = process.platform == "darwin" ? `${process.env.HOME}/Library/Application Support/Steam/steamapps/common/Brawlhalla/Brawlhalla.app/Contents/Resources/` : "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Brawlhalla\\";
-const dynamic = readFileSync(`${brawlDir}Dynamic.swz.bak`);
+const dynamic = readFileSync(`${brawlDir}Dynamic.swz`);
 const swf = readFileSync(`${brawlDir}BrawlhallaAir.swf`);
 
 function readSWZ() {
@@ -128,7 +128,7 @@ function testWriteSWZMetadata() {
 }
 
 function dumpSWZ() {
-    const patch = 6060;
+    const patch = 7010;
 
     let decryptionKey = -1;
 
@@ -136,6 +136,10 @@ function dumpSWZ() {
     for (const file of readdirSync(brawlDir)) {
         if (!file.endsWith(".swz") || file.includes(".bak")) {
             continue;
+        }
+
+        if (!existsSync(`./dump/`)) {
+            mkdirSync(`./dump/`);
         }
 
         // If the dump/file directory doesn't exist yet, create it
