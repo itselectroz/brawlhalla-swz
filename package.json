@@ -1,6 +1,6 @@
 {
   "name": "brawlhalla-swz",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An SWZ decryption library for the game Brawlhalla",
   "main": "dist/index.js",
   "scripts": {
