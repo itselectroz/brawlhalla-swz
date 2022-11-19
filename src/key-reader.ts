@@ -1,5 +1,15 @@
-import { SWFFile } from 'swf-parser';
-import { AbcFile, ExtendedBuffer, MethodBodyInfo, MultinameKind, MultinameKindQName, InstructionDisassembler, TraitTypes, TraitClass, TraitMethod } from 'abc-disassembler';
+import { SWFFile } from "swf-parser";
+import {
+  AbcFile,
+  ExtendedBuffer,
+  MethodBodyInfo,
+  MultinameKind,
+  MultinameKindQName,
+  InstructionDisassembler,
+  TraitTypes,
+  TraitClass,
+  TraitMethod,
+} from "abc-disassembler";
 
 export class KeyReader {
   public buffer: Buffer;
@@ -14,12 +24,14 @@ export class KeyReader {
     this.findBrawlhallaAir();
   }
 
-  findBrawlhallaAir(): boolean {
+  private findBrawlhallaAir(): boolean {
     for (const tag of this.file.tags) {
-      if (tag.type == 72) { // DoABC
+      if (tag.type == 72) {
+        // DoABC
         this.buffer = tag.data as Buffer;
         this.abcFile = AbcFile.read(new ExtendedBuffer(tag.data)) as AbcFile;
         this.disassembler = new InstructionDisassembler(this.abcFile);
+
         return true;
       }
     }
@@ -32,7 +44,11 @@ export class KeyReader {
     }
 
     const multinames = this.abcFile.constant_pool.multiname;
-    for (let multinameIndex = 0; multinameIndex < multinames.length; multinameIndex++) {
+    for (
+      let multinameIndex = 0;
+      multinameIndex < multinames.length;
+      multinameIndex++
+    ) {
       const multiname = multinames[multinameIndex];
       if (multiname.kind == MultinameKind.QName) {
         const qname = multiname.data as MultinameKindQName;
@@ -93,7 +109,10 @@ export class KeyReader {
       const instructions = this.disassembler.disassemble(initBody);
 
       for (const instruction of instructions) {
-        if (instruction.name == "pushstring" && instruction.params[0] == "Engine.swz") {
+        if (
+          instruction.name == "pushstring" &&
+          instruction.params[0] == "Engine.swz"
+        ) {
           return i;
         }
       }
@@ -125,7 +144,7 @@ export class KeyReader {
     return false;
   }
 
-  findDecryptionKey() {
+  public findDecryptionKey(): number | false {
     if (!this.abcFile || !this.disassembler) {
       return false;
     }
@@ -160,7 +179,11 @@ export class KeyReader {
 
         for (let i = 0; i < instructions.length; i++) {
           const instruction = instructions[i];
-          if (instruction.name == "callpropvoid" && instruction.params[0] == initQName && instruction.params[1] == 1) {
+          if (
+            instruction.name == "callpropvoid" &&
+            instruction.params[0] == initQName &&
+            instruction.params[1] == 1
+          ) {
             const previousInstruction = instructions[i - 1];
             if (previousInstruction.name != "pushuint") {
               continue;
